@@ -1,1 +1,20 @@
+<%= form_for @product do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div> <br />
+  <div>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div> <br />
+  <div>
+    <%= f.label :price %>
+    <%= f.number_field :price, min: 1, max: 1000, step: any %>
+  </div> <br />
+  <div>
+    <%= f.label :inventory %>
+    <%= f.number_field :inventory %>
+  </div> <br />
 
+  <%= f.submit %>
+<% end %>

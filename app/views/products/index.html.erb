@@ -1,1 +1,31 @@
+<ul>
+  <% @products.each do |product| %>
+    <h3><%= product.name %></h3>
+    <div id="product-<%= product.id %>">
+      <%= truncate("<p>#{product.description}</p>", escape: false) if product.description %>
+    </div>
+    <br />
+    <%= button_tag 'More Info', data: {id: product.id }, class: 'js-more' %>
+    <hr />
+  <% end %>
+</ul>
 
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+    $('.js-more').on('click', function(){
+      let id = $(this).data('id');
+
+      // get description
+      $.get(`/products/${id}/description`, data => {
+        $(`#product-${id}`).text(data);
+      });
+
+      // get inventory
+      $.get(`/products/${id}/inventory`, data => {
+        let availability = data === 'true' ? 'Available' : 'Sold Out'
+        let html = `<p>Availability: ${availability}</p>`
+        $(`#product-${id}`).append(html);
+      });
+    });
+  });
+</script>
